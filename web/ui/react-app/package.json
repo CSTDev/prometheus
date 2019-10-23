@@ -11,8 +11,8 @@
     "@types/node": "^12.11.1",
     "@types/react": "^16.8.2",
     "@types/react-dom": "^16.8.0",
-    "@types/sanitize-html": "^1.20.2",
     "@types/react-resize-detector": "^4.0.2",
+    "@types/sanitize-html": "^1.20.2",
     "bootstrap": "^4.2.1",
     "downshift": "^3.2.2",
     "flot": "^3.2.13",
@@ -26,10 +26,10 @@
     "popper.js": "^1.14.3",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "sanitize-html": "^1.20.1",
     "react-resize-detector": "^4.2.1",
     "react-scripts": "^3.2.0",
     "reactstrap": "^8.0.1",
+    "sanitize-html": "^1.20.1",
     "tempusdominus-bootstrap-4": "^5.1.2",
     "tempusdominus-core": "^5.0.3",
     "typescript": "^3.3.3"
@@ -41,7 +41,31 @@
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+      "react-app",
+      "plugin:@typescript-eslint/recommended",
+      "plugin:prettier/recommended"
+    ],
+    "rules": {
+      "@typescript-eslint/camelcase": "warn",
+      "eol-last": [
+        "error",
+        "always"
+      ],
+      "prefer-const": "warn"
+    },
+    "plugins": [
+      "prettier"
+    ]
+  },
+  "prettier":{
+    "singleQuote": true
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "eslint \"src/**/*.{ts,tsx}\""
+    }
   },
   "browserslist": [
     ">0.2%",
@@ -52,7 +76,21 @@
   "devDependencies": {
     "@types/flot": "0.0.31",
     "@types/moment-timezone": "^0.5.10",
-    "@types/reactstrap": "^8.0.5"
+    "@types/reactstrap": "^8.0.5",
+    "@typescript-eslint/eslint-plugin": "2.x",
+    "@typescript-eslint/parser": "2.x",
+    "babel-eslint": "10.x",
+    "eslint": "6.x",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "3.x",
+    "eslint-plugin-import": "2.x",
+    "eslint-plugin-jsx-a11y": "6.x",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "7.x",
+    "eslint-plugin-react-hooks": "1.x",
+    "husky": "^3.0.9",
+    "prettier": "^1.18.2"
   },
   "proxy": "http://localhost:9090"
 }

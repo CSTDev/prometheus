@@ -1,7 +1,7 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent } from 'react';
 
 interface SeriesNameProps {
-  labels: {[key: string]: string} | null;
+  labels: { [key: string]: string } | null;
   format: boolean;
 }
 
@@ -9,9 +9,9 @@ class SeriesName extends PureComponent<SeriesNameProps> {
   renderFormatted(): React.ReactNode {
     const labels = this.props.labels!;
 
-    let labelNodes: React.ReactNode[] = [];
+    const labelNodes: React.ReactNode[] = [];
     let first = true;
-    for (let label in labels) {
+    for (const label in labels) {
       if (label === '__name__') {
         continue;
       }
@@ -33,7 +33,7 @@ class SeriesName extends PureComponent<SeriesNameProps> {
       <>
         <span className="legend-metric-name">{labels.__name__ || ''}</span>
         <span className="legend-label-brace">{'{'}</span>
-          {labelNodes}
+        {labelNodes}
         <span className="legend-label-brace">{'}'}</span>
       </>
     );
@@ -43,8 +43,8 @@ class SeriesName extends PureComponent<SeriesNameProps> {
     const labels = this.props.labels!;
 
     let tsName = (labels.__name__ || '') + '{';
-    let labelStrings: string[] = [];
-    for (let label in labels) {
+    const labelStrings: string[] = [];
+    for (const label in labels) {
       if (label !== '__name__') {
         labelStrings.push(label + '="' + labels[label] + '"');
       }

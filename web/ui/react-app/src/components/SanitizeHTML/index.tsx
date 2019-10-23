@@ -5,7 +5,7 @@ import React, { PureComponent } from 'react';
 import sanitizeHTML from 'sanitize-html';
 
 interface SanitizeHTMLProps {
-  inline: Boolean;
+  inline: boolean;
   allowedTags: string[];
   children: Element | string;
 }

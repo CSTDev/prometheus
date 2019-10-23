@@ -5,7 +5,7 @@ import {
   InputGroup,
   InputGroupAddon,
   InputGroupText,
-  Input,
+  Input
 } from 'reactstrap';
 
 import Downshift from 'downshift';
@@ -34,21 +34,28 @@ class ExpressionInput extends Component<ExpressionInputProps> {
       this.props.executeQuery(this.exprInputRef.current!.value);
       event.preventDefault();
     }
-  }
+  };
 
   renderAutosuggest = (downshift: any) => {
     if (!downshift.isOpen) {
       return null;
     }
 
-    if (this.prevNoMatchValue && downshift.inputValue.includes(this.prevNoMatchValue)) {
+    if (
+      this.prevNoMatchValue &&
+      downshift.inputValue.includes(this.prevNoMatchValue)
+    ) {
       return null;
     }
 
-    let matches = fuzzy.filter(downshift.inputValue.replace(/ /g, ''), this.props.metricNames, {
-      pre: "<strong>",
-      post: "</strong>",
-    });
+    const matches = fuzzy.filter(
+      downshift.inputValue.replace(/ /g, ''),
+      this.props.metricNames,
+      {
+        pre: '<strong>',
+        post: '</strong>'
+      }
+    );
 
     if (matches.length === 0) {
       this.prevNoMatchValue = downshift.inputValue;
@@ -57,31 +64,32 @@ class ExpressionInput extends Component<ExpressionInputProps> {
 
     return (
       <ul className="autosuggest-dropdown" {...downshift.getMenuProps()}>
-        {
-          matches
-            .slice(0, 200) // Limit DOM rendering to 100 results, as DOM rendering is sloooow.
-            .map((item, index) => (
-              <li
-                {...downshift.getItemProps({
-                  key: item.original,
-                  index,
-                  item: item.original,
-                  style: {
-                    backgroundColor:
-                      downshift.highlightedIndex === index ? 'lightgray' : 'white',
-                    fontWeight: downshift.selectedItem === item ? 'bold' : 'normal',
-                  },
-                })}
-              >
-                <SanitizeHTML inline={true} allowedTags={['strong']}>
-                  {item.string}
-                </SanitizeHTML>
-              </li>
-            ))
-        }
+        {matches
+          .slice(0, 200) // Limit DOM rendering to 100 results, as DOM rendering is sloooow.
+          .map((item, index) => (
+            <li
+              {...downshift.getItemProps({
+                key: item.original,
+                index,
+                item: item.original,
+                style: {
+                  backgroundColor:
+                    downshift.highlightedIndex === index
+                      ? 'lightgray'
+                      : 'white',
+                  fontWeight:
+                    downshift.selectedItem === item ? 'bold' : 'normal'
+                }
+              })}
+            >
+              <SanitizeHTML inline={true} allowedTags={['strong']}>
+                {item.string}
+              </SanitizeHTML>
+            </li>
+          ))}
       </ul>
     );
-  }
+  };
 
   componentDidMount() {
     const $exprInput = $(this.exprInputRef.current!);
@@ -101,12 +109,16 @@ class ExpressionInput extends Component<ExpressionInputProps> {
         //onInputValueChange={this.props.onChange}
         selectedItem={this.props.value}
       >
-        {(downshift) => (
+        {downshift => (
           <div>
             <InputGroup className="expression-input">
               <InputGroupAddon addonType="prepend">
                 <InputGroupText>
-                {this.props.loading ? <FontAwesomeIcon icon="spinner" spin/> : <FontAwesomeIcon icon="search"/>}
+                  {this.props.loading ? (
+                    <FontAwesomeIcon icon="spinner" spin />
+                  ) : (
+                    <FontAwesomeIcon icon="search" />
+                  )}
                 </InputGroupText>
               </InputGroupAddon>
               <Input
@@ -148,7 +160,9 @@ class ExpressionInput extends Component<ExpressionInputProps> {
                 <Button
                   className="execute-btn"
                   color="primary"
-                  onClick={() => this.props.executeQuery(this.exprInputRef.current!.value)}
+                  onClick={() =>
+                    this.props.executeQuery(this.exprInputRef.current!.value)
+                  }
                 >
                   Execute
                 </Button>

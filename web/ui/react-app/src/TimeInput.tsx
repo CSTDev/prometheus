@@ -16,7 +16,7 @@ import {
   faCalendarCheck,
   faArrowUp,
   faArrowDown,
-  faTimes,
+  faTimes
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -25,7 +25,7 @@ library.add(
   faCalendarCheck,
   faArrowUp,
   faArrowDown,
-  faTimes,
+  faTimes
 );
 
 // Sadly needed to also replace <i> within the date picker, since it's not a React component.
@@ -45,39 +45,39 @@ class TimeInput extends Component<TimeInputProps> {
 
   getBaseTime = (): number => {
     return this.props.time || moment().valueOf();
-  }
+  };
 
   increaseTime = (): void => {
-    const time = this.getBaseTime() + this.props.range*1000/2;
+    const time = this.getBaseTime() + (this.props.range * 1000) / 2;
     this.props.onChangeTime(time);
-  }
+  };
 
   decreaseTime = (): void => {
-    const time = this.getBaseTime() - this.props.range*1000/2;
+    const time = this.getBaseTime() - (this.props.range * 1000) / 2;
     this.props.onChangeTime(time);
-  }
+  };
 
   clearTime = (): void => {
     this.props.onChangeTime(null);
-  }
+  };
 
   componentDidMount() {
     this.$time = $(this.timeInputRef.current!);
 
     this.$time.datetimepicker({
       icons: {
-        today: 'fas fa-calendar-check',
+        today: 'fas fa-calendar-check'
       },
       buttons: {
         //showClear: true,
         showClose: true,
-        showToday: true,
+        showToday: true
       },
       sideBySide: true,
       format: 'YYYY-MM-DD HH:mm',
       locale: 'en',
       timeZone: 'UTC',
-      defaultDate: this.props.time,
+      defaultDate: this.props.time
     });
 
     this.$time.on('change.datetimepicker', (e: any) => {
@@ -87,19 +87,24 @@ class TimeInput extends Component<TimeInputProps> {
     });
   }
 
-  componentWillUnmount() {
+  componentWillUnmount(): void {
     this.$time.datetimepicker('destroy');
   }
 
-  componentDidUpdate() {
-    this.$time.datetimepicker('date', this.props.time ? moment(this.props.time) : null);
+  componentDidUpdate(): void {
+    this.$time.datetimepicker(
+      'date',
+      this.props.time ? moment(this.props.time) : null
+    );
   }
 
   render() {
     return (
       <InputGroup className="time-input" size="sm">
         <InputGroupAddon addonType="prepend">
-          <Button title="Decrease time" onClick={this.decreaseTime}><FontAwesomeIcon icon="chevron-left" fixedWidth/></Button>
+          <Button title="Decrease time" onClick={this.decreaseTime}>
+            <FontAwesomeIcon icon="chevron-left" fixedWidth />
+          </Button>
         </InputGroupAddon>
 
         <Input
@@ -107,19 +112,30 @@ class TimeInput extends Component<TimeInputProps> {
           innerRef={this.timeInputRef}
           onFocus={() => this.$time.datetimepicker('show')}
           onBlur={() => this.$time.datetimepicker('hide')}
-          onKeyDown={(e) => ['Escape', 'Enter'].includes(e.key) && this.$time.datetimepicker('hide')}
+          onKeyDown={e =>
+            ['Escape', 'Enter'].includes(e.key) &&
+            this.$time.datetimepicker('hide')
+          }
         />
 
         {/* CAUTION: While the datetimepicker also has an option to show a 'clear' button,
             that functionality is broken, so we create an external solution instead. */}
-        {this.props.time &&
+        {this.props.time && (
           <InputGroupAddon addonType="append">
-            <Button className="clear-time-btn" title="Clear time" onClick={this.clearTime}><FontAwesomeIcon icon="times" fixedWidth/></Button>
+            <Button
+              className="clear-time-btn"
+              title="Clear time"
+              onClick={this.clearTime}
+            >
+              <FontAwesomeIcon icon="times" fixedWidth />
+            </Button>
           </InputGroupAddon>
-        }
+        )}
 
         <InputGroupAddon addonType="append">
-          <Button title="Increase time" onClick={this.increaseTime}><FontAwesomeIcon icon="chevron-right" fixedWidth/></Button>
+          <Button title="Increase time" onClick={this.increaseTime}>
+            <FontAwesomeIcon icon="chevron-right" fixedWidth />
+          </Button>
         </InputGroupAddon>
       </InputGroup>
     );
